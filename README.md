@@ -1,56 +1,49 @@
-# 🎁 GitHub Wrapped
+# GitHub Wrapped
 
-Sua retrospectiva do GitHub no estilo **Spotify Wrapped**: digite um username e veja um slideshow de cards com repositórios, estrelas, linguagens favoritas, repositório destaque e mais — com um card final compartilhável para baixar como imagem.
+Retrospectiva ao estilo Spotify Wrapped para perfis do GitHub. O usuário digita um username, e a aplicação monta um slideshow com repositórios, estrelas, linguagens favoritas e um card final para baixar como imagem.
 
-## Estrutura
+## Stack
 
-```
-github-wrapped/
-├── client/   # Frontend — React (Vite) + Tailwind CSS + shadcn/ui + Framer Motion
-└── server/   # Backend — Node.js + Express + Axios + node-cache
-```
+- **client** — React (Vite), Tailwind CSS, shadcn/ui, Framer Motion
+- **server** — Node.js, Express, Axios, node-cache
 
-## Como rodar
+## Rodando localmente
 
-Pré-requisito: Node.js 20+.
-
-### 1. Backend
+Requer Node.js 20+.
 
 ```bash
+# backend
 cd server
 npm install
-cp .env.example .env   # opcional: adicione um GITHUB_TOKEN para 5000 req/hora
-npm run dev            # http://localhost:3001
-```
+cp .env.example .env   # GITHUB_TOKEN é opcional, mas aumenta o rate limit
+npm run dev             # http://localhost:3001
 
-### 2. Frontend
-
-```bash
+# frontend, em outro terminal
 cd client
 npm install
-npm run dev            # http://localhost:5173 (proxy de /api para o backend)
+npm run dev              # http://localhost:5173
 ```
 
-Abra http://localhost:5173, digite um username do GitHub e navegue pelos cards com as setas, teclado (← →) ou arrastando (swipe no mobile).
+O Vite faz proxy de `/api` para o backend, então basta abrir `http://localhost:5173`.
 
 ## API
 
 | Rota | Descrição |
 | --- | --- |
-| `GET /api/wrapped/:username` | JSON agregado com perfil, total de stars, top 5 linguagens, repositório com mais stars, seguidores etc. |
+| `GET /api/wrapped/:username` | Agrega perfil, total de stars, top 5 linguagens, repositório em destaque e seguidores |
 | `GET /api/health` | Health check |
 
-Erros tratados: `400` username inválido · `404` usuário não encontrado · `429` rate limit da API do GitHub excedido · `500` erro inesperado.
+Códigos de erro: `400` username inválido, `404` usuário inexistente, `429` rate limit do GitHub excedido, `500` erro inesperado.
 
-O backend usa cache em memória (10 min por username) para economizar o rate limit. Com `GITHUB_TOKEN` no `.env` (sem nenhum escopo), o limite sobe de 60 para 5000 req/hora.
+As respostas são cacheadas em memória por 10 minutos por username, para não estourar o rate limit da API do GitHub. Sem token, o limite é 60 requisições/hora; com um `GITHUB_TOKEN` (sem escopos, só para dados públicos) sobe para 5000/hora.
 
 ## Deploy
 
-- **Frontend (Vercel):** aponte o projeto para `client/`. Defina `VITE_API_URL` com a URL pública do backend.
-- **Backend (Render/Railway):** aponte para `server/`, comando `npm start`. Defina `GITHUB_TOKEN` (recomendado em produção) e use a porta fornecida via `PORT`.
+- **client** (Vercel): apontar para o diretório `client/`. Definir `VITE_API_URL` com a URL pública do backend.
+- **server** (Render/Railway): apontar para `server/`, comando de start `npm start`. Definir `GITHUB_TOKEN` e usar a porta fornecida via `PORT`.
 
-## Ideias futuras
+## Roadmap
 
-- Gráfico de commits por mês (API de eventos do GitHub)
-- Comparação entre dois usuários lado a lado
-- Animação de confete no card final
+- Gráfico de commits por mês
+- Comparação entre dois usuários
+- Animação no card final
