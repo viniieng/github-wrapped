@@ -1,9 +1,11 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toPng } from 'html-to-image';
+import confetti from 'canvas-confetti';
 import { Check, Download, RotateCcw } from 'lucide-react';
 import StoryCard, { StoryItem } from '@/components/cards/StoryCard';
 import { Button } from '@/components/ui/button';
 import { formatNumber } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 function Stat({ label, value }) {
   return (
@@ -17,8 +19,19 @@ function Stat({ label, value }) {
 export default function SummaryCard({ wrapped, onRestart }) {
   const shareRef = useRef(null);
   const [downloadState, setDownloadState] = useState('idle'); // idle | busy | done
+  const reducedMotion = usePrefersReducedMotion();
 
   const { user, stats, year } = wrapped;
+
+  useEffect(() => {
+    if (reducedMotion) return;
+    confetti({
+      particleCount: 60,
+      spread: 55,
+      origin: { y: 0.3 },
+      disableForReducedMotion: true,
+    });
+  }, [reducedMotion]);
 
   async function handleDownload() {
     if (!shareRef.current || downloadState === 'busy') return;

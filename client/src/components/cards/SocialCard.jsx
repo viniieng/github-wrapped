@@ -1,6 +1,6 @@
 import { UserPlus, Users } from 'lucide-react';
 import StoryCard, { StoryItem } from '@/components/cards/StoryCard';
-import { formatNumber } from '@/lib/utils';
+import CountUp from '@/components/CountUp';
 
 export default function SocialCard({ wrapped }) {
   const { followers, following } = wrapped.user;
@@ -25,7 +25,7 @@ export default function SocialCard({ wrapped }) {
           <div className="flex-1">
             <Users className="mx-auto size-8 text-white/80" />
             <p className="mt-2 text-6xl font-black tabular-nums tracking-tighter">
-              {formatNumber(followers)}
+              <CountUp value={followers} />
             </p>
             <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-white/70">
               seguidores
@@ -37,7 +37,7 @@ export default function SocialCard({ wrapped }) {
           <div className="flex-1">
             <UserPlus className="mx-auto size-8 text-white/80" />
             <p className="mt-2 text-6xl font-black tabular-nums tracking-tighter">
-              {formatNumber(following)}
+              <CountUp value={following} />
             </p>
             <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-white/70">
               seguindo

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import StoryCard, { StoryItem } from '@/components/cards/StoryCard';
+import { getLanguageGradient } from '@/lib/color';
 
 const LANGUAGE_COLORS = {
   JavaScript: '#f1e05a',
@@ -42,8 +43,10 @@ export default function LanguagesCard({ wrapped }) {
     );
   }
 
+  const topColor = LANGUAGE_COLORS[topLanguage] ?? FALLBACK_COLORS[0];
+
   return (
-    <StoryCard gradient="from-emerald-500 via-teal-600 to-cyan-800">
+    <StoryCard gradientStyle={{ backgroundImage: getLanguageGradient(topColor) }}>
       <StoryItem className="text-center">
         <p className="text-lg text-white/80">Sua linguagem favorita foi</p>
         <p className="text-6xl font-black tracking-tighter">{topLanguage}</p>

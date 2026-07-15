@@ -21,9 +21,9 @@ export default function HomeScreen({ onSubmit, error }) {
       className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-6"
     >
       {/* blobs decorativos ao fundo */}
-      <div className="pointer-events-none absolute -top-32 -left-32 size-96 animate-float rounded-full bg-violet-600/30 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-40 -right-24 size-[28rem] animate-float-slow rounded-full bg-fuchsia-600/25 blur-3xl" />
-      <div className="pointer-events-none absolute top-1/3 right-1/4 size-64 animate-float rounded-full bg-cyan-500/15 blur-3xl" />
+      <div className="pointer-events-none absolute -top-32 -left-32 size-64 animate-float rounded-full bg-violet-600/30 blur-2xl sm:size-96 sm:blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-40 -right-24 size-72 animate-float-slow rounded-full bg-fuchsia-600/25 blur-2xl sm:size-[28rem] sm:blur-3xl" />
+      <div className="pointer-events-none absolute top-1/3 right-1/4 size-40 animate-float rounded-full bg-cyan-500/15 blur-2xl sm:size-64 sm:blur-3xl" />
 
       <div className="relative z-10 flex w-full max-w-md flex-col items-center text-center">
         <motion.div

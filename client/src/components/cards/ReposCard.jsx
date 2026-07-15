@@ -1,6 +1,6 @@
 import { FolderGit2, Star } from 'lucide-react';
 import StoryCard, { StoryItem } from '@/components/cards/StoryCard';
-import { formatNumber } from '@/lib/utils';
+import CountUp from '@/components/CountUp';
 
 export default function ReposCard({ wrapped }) {
   const { user, stats } = wrapped;
@@ -11,7 +11,7 @@ export default function ReposCard({ wrapped }) {
         <FolderGit2 className="mx-auto size-10 text-white/80" />
         <p className="mt-3 text-lg text-white/80">Você publicou</p>
         <p className="text-8xl font-black tabular-nums tracking-tighter">
-          {formatNumber(user.publicRepos)}
+          <CountUp value={user.publicRepos} />
         </p>
         <p className="text-xl font-semibold">
           {user.publicRepos === 1 ? 'repositório público' : 'repositórios públicos'}
@@ -26,7 +26,7 @@ export default function ReposCard({ wrapped }) {
         <p className="text-lg text-white/80">e a comunidade retribuiu com</p>
         <p className="flex items-center justify-center gap-3 text-7xl font-black tabular-nums tracking-tighter">
           <Star className="size-12 fill-yellow-300 text-yellow-300" />
-          {formatNumber(stats.totalStars)}
+          <CountUp value={stats.totalStars} />
         </p>
         <p className="text-xl font-semibold">
           {stats.totalStars === 1 ? 'estrela' : 'estrelas'} no total
